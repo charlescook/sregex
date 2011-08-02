@@ -40,7 +40,78 @@ Coal-Powered Robots Run Amok
 ATOM-Powered Robots Run AMOK
 */ 
 ```
+Some unit tests illustrate usage further:
+
+```c#
+const string src = "Atom-Powered Robots Run Amok";
+
+[TestMethod]
+public void sres1()
+{
+  var result = sregex.sres(src, "y/ /").ToArray();
+  CollectionAssert.AreEqual(new string[] { "Atom-Powered", "Robots", "Run", "Amok" }, result);
+}
+
+[TestMethod]
+public void sres2()
+{
+  var result = sregex.sres(src, "y/( |-)/").ToArray();
+  CollectionAssert.AreEqual(new string[] { "Atom", "Powered", "Robots", "Run", "Amok" }, result);
+}
+
+[TestMethod]
+public void sres3()
+{
+  var result = sregex.sres(src, "y/ / x/R.*/").ToArray();
+  CollectionAssert.AreEqual(new string[] { "Robots", "Run" }, result);
+}
+
+[TestMethod]
+public void sres4()
+{
+  var result = sregex.sres(src, "y/ / x/R./").ToArray();
+  CollectionAssert.AreEqual(new string[] { "Ro", "Ru" }, result);
+}
+
+[TestMethod]
+public void sres5()
+{
+  var result = sregex.sres(src, "y/( |-)/ v/^R/").ToArray();
+  CollectionAssert.AreEqual(new string[] { "Atom", "Powered", "Amok" }, result);
+}
+
+[TestMethod]
+public void sres6()
+{
+  var result = sregex.sres(src, "y/( |-)/ v/^R/ g/om/").ToArray();
+  CollectionAssert.AreEqual(new string[] { "Atom" }, result);
+}
+
+[TestMethod]
+public void sub1()
+{
+  string result = sregex.sub(src, "y/( |-)/ v/^R/ g/om/", "Coal");
+  Assert.AreEqual("Coal-Powered Robots Run Amok", result);
+}
+
+[TestMethod]
+public void sub2()
+{
+  string result = sregex.sub(src, "x/A.../", x => x.ToUpper());
+  Assert.AreEqual("ATOM-Powered Robots Run AMOK", result);
+}
+
+[TestMethod]
+public void sre1()
+{
+  var result = sregex.sre(src, "y/ / v/^R/ g/om/").ToArray();
+  Assert.AreEqual(1, result.Length);
+  Assert.AreEqual(new Range(0, 12), result[0]);
+}
+```
+
 [0]: http://www.cookcomputing.com/blog/archives/structural-regular-expressions-in-csharp
 [1]: http://bitworking.org/news/2009/10/sregex
 [2]: http://doc.cat-v.org/bell_labs/structural_regexps/
 [3]: http://code.google.com/p/sregex/
+
