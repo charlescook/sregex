@@ -1,0 +1,8 @@
+test/bin/
+test/obj/
+
+sregex.suo
+sregex.user
+
+TestResults/
+
