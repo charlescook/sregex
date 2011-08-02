@@ -48,14 +48,14 @@ const string src = "Atom-Powered Robots Run Amok";
 [TestMethod]
 public void sres1()
 {
-  var result = sregex.sres(src, "y/ /").ToArray();
+  string[] result = sregex.sres(src, "y/ /").ToArray();
   CollectionAssert.AreEqual(new string[] { "Atom-Powered", "Robots", "Run", "Amok" }, result);
 }
 
 [TestMethod]
 public void sres2()
 {
-  var result = sregex.sres(src, "y/( |-)/").ToArray();
+  string[] result = sregex.sres(src, "y/( |-)/").ToArray();
   CollectionAssert.AreEqual(new string[] { "Atom", "Powered", "Robots", "Run", "Amok" }, result);
 }
 
@@ -69,21 +69,21 @@ public void sres3()
 [TestMethod]
 public void sres4()
 {
-  var result = sregex.sres(src, "y/ / x/R./").ToArray();
+  string[] result = sregex.sres(src, "y/ / x/R./").ToArray();
   CollectionAssert.AreEqual(new string[] { "Ro", "Ru" }, result);
 }
 
 [TestMethod]
 public void sres5()
 {
-  var result = sregex.sres(src, "y/( |-)/ v/^R/").ToArray();
+  string[] result = sregex.sres(src, "y/( |-)/ v/^R/").ToArray();
   CollectionAssert.AreEqual(new string[] { "Atom", "Powered", "Amok" }, result);
 }
 
 [TestMethod]
 public void sres6()
 {
-  var result = sregex.sres(src, "y/( |-)/ v/^R/ g/om/").ToArray();
+  string[] result = sregex.sres(src, "y/( |-)/ v/^R/ g/om/").ToArray();
   CollectionAssert.AreEqual(new string[] { "Atom" }, result);
 }
 
@@ -104,9 +104,9 @@ public void sub2()
 [TestMethod]
 public void sre1()
 {
-  var result = sregex.sre(src, "y/ / v/^R/ g/om/").ToArray();
+  Range[] result = sregex.sre(src, "y/ / v/^R/ g/om/").ToArray();
   Assert.AreEqual(1, result.Length);
-  Assert.AreEqual(new Range(0, 12), result[0]);
+  Assert.AreEqual(new Range(0, 12), result.First());
 }
 ```
 
